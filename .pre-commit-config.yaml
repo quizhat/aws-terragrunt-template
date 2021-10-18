@@ -1,0 +1,28 @@
+repos:
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: check-added-large-files # Prevent giant files from being committed
+      - id: check-case-conflict # Check for files that would conflict in case-insensitive filesystems
+      - id: check-merge-conflict # Check for files that contain merge conflict strings.
+      - id: check-symlinks # Checks for symlinks which do not point to anything.
+      - id: check-vcs-permalinks # Ensures that links to vcs websites are permalinks.
+      - id: check-yaml # This hook checks yaml files for parseable syntax.
+      - id: detect-aws-credentials # Detects *your* aws credentials from the aws cli credentials file
+      - id: detect-private-key # Detects the presence of private keys
+      - id: end-of-file-fixer # Ensures that a file is either empty, or ends with one newline.
+      - id: forbid-new-submodules # Prevent addition of new git submodules
+      - id: mixed-line-ending # Replaces or checks mixed line ending
+      - id: no-commit-to-branch # Don't commit to branch
+
+  - repo: git://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.52.0
+    hooks:
+      - id: terragrunt_fmt # Rewrites all Terragrunt configuration files to a canonical format.
+      - id: terragrunt_validate # Validates all Terragrunt configuration files.
+
+  - repo: git://github.com/Lucas-C/pre-commit-hooks-nodejs
+    rev: v1.1.1
+    hooks:
+      - id: markdown-toc # Insert a table of contents in Markdown files, like a README.md
