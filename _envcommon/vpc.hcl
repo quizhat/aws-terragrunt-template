@@ -14,9 +14,9 @@ locals {
 
   # Extract out common variables for reuse
   env = local.environment_vars.locals.environment
-
+  cidr_block = local.environment_vars.locals.cidr_block
   # Expose the base source URL so different versions of the module can be deployed in different environments.
-  base_source_url = "" # TODO add base source URL
+  base_source_url = "git::https://github.com/cloudposse/terraform-aws-dynamic-subnets//"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -24,4 +24,9 @@ locals {
 # These are the variables we have to pass in to use the module. This defines the parameters that are common across all
 # environments.
 # ---------------------------------------------------------------------------------------------------------------------
-inputs = { }
+inputs = {
+    namespace = "rb"
+    name = "k8s"
+    environment = local.env
+    cidr_block = local.cidr_block
+}

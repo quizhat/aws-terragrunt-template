@@ -7,7 +7,7 @@
 # We override the terraform block source attribute here just for the QA environment to show how you would deploy a
 # different version of the module in a specific environment.
 terraform {
-  source = "${include.envcommon.locals.base_source_url}?ref=v0.4.0"
+  source = "${include.envcommon.locals.base_source_url}?ref=v0.39.8"
 }
 
 
@@ -24,11 +24,16 @@ include "root" {
 # Include the envcommon configuration for the component. The envcommon configuration contains settings that are common
 # for the component across all environments.
 include "envcommon" {
-  path   = "${dirname(find_in_parent_folders())}/envcommon/replaceme.hcl" # TODO replace module name
+  path   = "${dirname(find_in_parent_folders())}/_envcommon/dynamic-subnets.hcl"
   expose = true
 }
 
+dependency "vpc" {
+    config_path = "../vpc"
+}
 
-# ---------------------------------------------------------------------------------------------------------------------
-# We don't need to override any of the common parameters for this environment, so we don't specify any inputs.
-# ---------------------------------------------------------------------------------------------------------------------
+inputs = {
+    vpc_id = dependency.vpc.outputs.vpc_id
+    cidr_block = dependency.vpc.outputs.vpc_cidr_block
+    nat_gateway_enabled = false
+}
